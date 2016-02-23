@@ -1,0 +1,60 @@
+//Project 1
+
+// Global
+float skyX = 200;
+float skyY = 60;
+float sunX = 30;
+float sunY = 60;
+
+void setup () {
+size (800,500);
+}
+
+void draw () {
+ sky();
+ horizon();
+ //hero();
+ //gold();
+ //score();
+
+}
+
+
+void sky () {                     // going to draw the sun, sky and one cloud
+  background (5, 186, 255);
+  //  going to draw the sun
+  stroke(214, 250, 13);
+  sunX= sunX+1.8;                 // the speed of the sun as it moves across the screen
+  fill (214, 250, 13);
+  ellipse (sunX, sunY, 50,50);
+    if (sunX > width) {           // if the sun goes out the screen, it will return at x=0
+     sunX = 0;
+    } 
+  // the cloud and it's movement is going to be created
+  fill (255);
+  skyX= skyX+1.5;                 // the clouds move at a constant rate
+  stroke(255);
+  ellipse (skyX, skyY+30, 50,30);
+  ellipse (skyX, skyY+45, 100,40);
+    if (skyX > width) {           // if the clouds go out the screen, the could will return at x=0
+      skyX = 0;
+    }  
+}
+
+void horizon() {                  // going to draw the house and the lawn 
+  stroke(44, 229, 32);
+  fill (44, 229, 32);
+  rect (0, 200, 800,300);
+  // going to draw the house
+  stroke(0);
+  fill(113, 55, 0); 
+  triangle( 100,170, 250,170, 175,130);     // the roof of the house
+  fill (216, 116, 25);                      // color of the house
+  rect (100, 170, 150,100);                
+  fill(67, 33, 1 );
+  rect (160, 225, 30,45);                   // the door of the house
+  fill(214, 250, 13);
+  rect ( 120, 190, 25,25);                  // windows of the house
+  rect (205, 190, 25,25);
+   
+}
