@@ -1,0 +1,132 @@
+/// DANIEL POLIT - PROJECT 1
+
+// Declaring variables
+float cloudX = 200;
+float cloudY = 60;
+float sunX = 0;
+float sunY = 120;
+float pacX = 500;
+float pacY = 300;
+float goldX;
+float goldY;
+float r;
+float b;
+float g;
+float horizon;
+int n;
+
+void setup () {      // the setup
+size (800,600);
+horizon = height/3;
+}
+
+void draw () {       // going to draw the next frames
+   n= n+1;
+   sky();
+   sun();
+   ground();
+   mrpac();
+   treasure();
+   texts();
+}
+
+void sky () {                     // going to draw the sun, sky and one cloud
+  background (5, 186, 255);
+  // the cloud and it's movement is going to be created
+  fill (255);
+  cloudX= cloudX+1.5;                 // the clouds move at a constant rate
+  stroke(255);
+  ellipse (cloudX, cloudY+30, 50,30);
+  ellipse (cloudX, cloudY+45, 100,40);
+    if (cloudX> width) {           // if the clouds go out the screen, the could will return at x=0
+      cloudX = 0;
+    }  
+}
+
+void sun() { 
+  float az= -90 * sin( PI * sunX / width); // makes the moon rise and come down
+  //  going to draw the sun
+  //stroke(214, 250, 13);
+  fill (214, 250, 13);
+  ellipse (sunX, sunY + az , 50,50);
+  sunX= sunX+1.8;                 // the speed of the sun as it moves across the screen
+    if (sunX > width) {         // if the sun goes out the screen, it will return at x=0
+     sunX = 0;
+    } 
+}
+    
+void ground() {                  // going to draw the house and the grass
+  stroke(44, 229, 32);
+  fill (44, 229, 32);
+  rect (0, horizon, width,height-horizon);  // the grass
+  // going to draw the house
+  stroke(0);
+  fill(113, 55, 0); 
+  triangle( 100,horizon-30, 175,horizon-70, 250,horizon-30);     // the roof of the house
+  fill (216, 116, 25);                      // color of the house
+  rect (100, horizon-30, 150,horizon-100);                  // the house             
+  fill(67, 33, 1 );
+  rect (160, horizon+25, 30,45);                   // the door of the house
+  fill(214, 250, 13);
+  rect ( 120, horizon-10, 25,25);                  // windows of the house
+  rect (205, horizon-10, 25,25);   
+}
+
+void treasure() {
+  if (goldY < horizon+100) {    // doesn't allow the gold to pass that coordinate 
+    goldY= horizon+100;
+    }
+  r= random(255);   
+  b= random(255);
+  g= random(255);
+  fill(r, g, b);                         // makes random colors
+  ellipse( goldX, goldY, 30,30);         // a treasure with random colors
+}
+
+void mrpac() {           // going to draw the Mr. pac
+  if (pacY < horizon+100) {     // doesn't allow pac to pass that point
+    pacY= horizon+100;
+  }
+  fill(255,255,0);                             // Mr.pac is yellow
+ // ellipse( pacX, pacY, 120,120);         
+ //triangle( pacX,pacY, pacX+60,pacY-25, pacX+60, pacY+25);  // the mouth
+  if ( n % 30 > 15 ){
+   // arc(pacX,pacY, 120,120, 0, PI+HALF_PI, PIE);  // Mr.pac is three quaters of a circle
+    arc(pacX,pacY, 120,120, PI/8, 1.87*PI, PIE);
+  } else {
+    arc(pacX,pacY, 120,120, 0, TWO_PI, PIE);    // Mr.pac is a complete cirlce  
+  }
+  
+  fill(0);
+  ellipse( pacX - 20, pacY - 15, 15,15);  // the eyes
+  fill(44, 229, 32);
+  stroke(44, 229, 32);
+  pacX = pacX + (goldX-pacX) / 50;        // allows pac to follow the treasure
+  pacY = pacY + (goldY-pacY)/ 50;
+ 
+ // IF the distance 
+  if (dist(pacX, pacY, goldX, goldY) < 50) {
+   goldX = random (0, 800);
+   goldY = random (300, 600);
+}
+   
+  if ( key == 'q'){                        // closes the program
+    exit();
+  }
+}
+
+void mousePressed() {
+  if (mousePressed)
+     goldX= mouseX;
+     goldY= mouseY;
+}
+
+
+void texts() {
+fill(0);
+text( "CST 112 - Project 1", 50, 20);
+text("Daniel Polit", 50, height - 20);
+text("If 'q' is pressed, the program closes", 280, height-20);
+}
+
+  
